@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-void main() {
-  runApp(const MainApp());
+import 'package:city_guide_app/src/application/application.dart';
+import 'package:flutter/material.dart';
+import 'src/application/di/injection_container.dart' as di;
+
+void main() async {
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    _registerDependencies();
+    runApp(const Application());
+  }, (error, stackTrace) {
+    print('Error: $error');
+    print('StackTrace: $stackTrace');
+  });
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+Future<void> _registerDependencies() async {
+  await di.init();
 }
