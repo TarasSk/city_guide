@@ -12,8 +12,9 @@ FutureOr<void> init() async {
 }
 
 Future<void> _registerRouter() async {
-  injector.registerSingleton<GoRouter>(AppRouter.createRouter());
+  injector.registerSingleton<GoRouter>(AppRouter.router);
 }
+
 Future<void> _registerRepositories() async {
   // TODO: Add repository registration logic here
 }
