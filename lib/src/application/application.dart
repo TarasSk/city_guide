@@ -10,18 +10,17 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-
-   final _appRouter = injector<GoRouter>();
+  final _appRouter = injector<GoRouter>();
   @override
   void initState() {
     super.initState();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'City Guide App',
-      routerDelegate:_appRouter.routerDelegate ,
+      routerDelegate: _appRouter.routerDelegate,
       routeInformationParser: _appRouter.routeInformationParser,
       routeInformationProvider: _appRouter.routeInformationProvider,
     );
