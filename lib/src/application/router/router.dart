@@ -48,6 +48,7 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   // if the user is not logged in, they need to login
   final loggedIn = true; //await context.read<AuthRepository>().isAuthenticated;
   final loggingIn = state.matchedLocation == Routes.login;
+  // ignore: dead_code
   if (!loggedIn) {
     return Routes.login;
   }
