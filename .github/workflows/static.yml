@@ -34,7 +34,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: ${{ github.ref_name }}-android-apk
+          name: android-apk
           path: ${{ env.PUBLISH_DIR }}/builds/
           
       # Debug available artifacts
