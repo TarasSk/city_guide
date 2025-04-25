@@ -1,112 +1,112 @@
-name: APK Gallery Publisher
+# name: APK Gallery Publisher
 
-on:
-  workflow_run:
-    workflows: ["BuildAndTest"]
-    types: [completed]
-  workflow_dispatch:
+# on:
+#   workflow_run:
+#     workflows: ["BuildAndTest"]
+#     types: [completed]
+#   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-  actions: read
+# permissions:
+#   contents: read
+#   pages: write
+#   id-token: write
+#   actions: read
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+# concurrency:
+#   group: "pages"
+#   cancel-in-progress: false
 
-env:
-  PUBLISH_DIR: public
+# env:
+#   PUBLISH_DIR: public
 
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     environment:
+#       name: github-pages
+#       url: ${{ steps.deployment.outputs.page_url }}
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      # Update artifact download pattern to match exact artifact name
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: android-apk
-          path: ${{ env.PUBLISH_DIR }}/builds/
+#       # Update artifact download pattern to match exact artifact name
+#       - name: Download artifacts
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: android-apk
+#           path: ${{ env.PUBLISH_DIR }}/builds/
           
-      # Debug available artifacts
-      - name: Debug available artifacts
-        run: |
-          echo "Available artifacts:"
-          ls ${{ env.PUBLISH_DIR }}/builds/
+#       # Debug available artifacts
+#       - name: Debug available artifacts
+#         run: |
+#           echo "Available artifacts:"
+#           ls ${{ env.PUBLISH_DIR }}/builds/
           
-      # Rename artifacts to original filenames
-      - name: Normalize filenames
-        run: |
-          cd ${{ env.PUBLISH_DIR }}/builds/
-          for artifact in *-android-apk; do
-            # Extract branch name and move to standard location
-            branch_name="${artifact%-android-apk}"
-            mkdir -p "../assets/$branch_name"
-            mv "$artifact" "app-release.apk"
-          done
+#       # Rename artifacts to original filenames
+#       - name: Normalize filenames
+#         run: |
+#           cd ${{ env.PUBLISH_DIR }}/builds/
+#           for artifact in *-android-apk; do
+#             # Extract branch name and move to standard location
+#             branch_name="${artifact%-android-apk}"
+#             mkdir -p "../assets/$branch_name"
+#             mv "$artifact" "app-release.apk"
+#           done
 
-      # Generate QR codes
-      - name: Create QR codes
-        run: |
-          cd ${{ env.PUBLISH_DIR }}
-          for branch_dir in builds/*/; do
-            branch_name=$(basename "$branch_dir")
-            qr_url="https://${{ github.repository_owner }}.github.io/${{ github.repository }}/builds/$branch_name/app-release.apk"
-            curl -o "assets/$branch_name-qr.png" \
-              "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=$qr_url"
-          done
+#       # Generate QR codes
+#       - name: Create QR codes
+#         run: |
+#           cd ${{ env.PUBLISH_DIR }}
+#           for branch_dir in builds/*/; do
+#             branch_name=$(basename "$branch_dir")
+#             qr_url="https://${{ github.repository_owner }}.github.io/${{ github.repository }}/builds/$branch_name/app-release.apk"
+#             curl -o "assets/$branch_name-qr.png" \
+#               "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=$qr_url"
+#           done
 
-      # Generate the gallery page
-      - name: Build gallery
-        run: |
-          cat << 'EOF' > ${{ env.PUBLISH_DIR }}/index.html
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>APK Gallery</title>
-            <style>
-              .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-              .card { border: 1px solid #ddd; padding: 15px; text-align: center; }
-              .qr { width: 200px; height: 200px; margin: 0 auto; }
-              .branch-name { font-weight: bold; margin: 10px 0; }
-            </style>
-          </head>
-          <body>
-            <h1>APK Download Gallery</h1>
-            <div class="grid">
-          EOF
+#       # Generate the gallery page
+#       - name: Build gallery
+#         run: |
+#           cat << 'EOF' > ${{ env.PUBLISH_DIR }}/index.html
+#           <!DOCTYPE html>
+#           <html>
+#           <head>
+#             <title>APK Gallery</title>
+#             <style>
+#               .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+#               .card { border: 1px solid #ddd; padding: 15px; text-align: center; }
+#               .qr { width: 200px; height: 200px; margin: 0 auto; }
+#               .branch-name { font-weight: bold; margin: 10px 0; }
+#             </style>
+#           </head>
+#           <body>
+#             <h1>APK Download Gallery</h1>
+#             <div class="grid">
+#           EOF
 
-          # Add cards for each branch
-          cd ${{ env.PUBLISH_DIR }}
-          for branch_dir in builds/*/; do
-            branch_name=$(basename "$branch_dir")
-            echo "<div class='card'>
-                    <div class='branch-name'>$branch_name</div>
-                    <img class='qr' src='assets/$branch_name-qr.png'>
-                    <a href='builds/$branch_name/app-release.apk'>Download APK</a>
-                  </div>" >> index.html
-          done
+#           # Add cards for each branch
+#           cd ${{ env.PUBLISH_DIR }}
+#           for branch_dir in builds/*/; do
+#             branch_name=$(basename "$branch_dir")
+#             echo "<div class='card'>
+#                     <div class='branch-name'>$branch_name</div>
+#                     <img class='qr' src='assets/$branch_name-qr.png'>
+#                     <a href='builds/$branch_name/app-release.apk'>Download APK</a>
+#                   </div>" >> index.html
+#           done
 
-          echo "</div></body></html>" >> index.html
+#           echo "</div></body></html>" >> index.html
 
-      # Deploy to GitHub Pages
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+#       # Deploy to GitHub Pages
+#       - name: Setup Pages
+#         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ${{ env.PUBLISH_DIR }}
+#       - name: Upload artifact
+#         uses: actions/upload-pages-artifact@v3
+#         with:
+#           path: ${{ env.PUBLISH_DIR }}
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+#       - name: Deploy to GitHub Pages
+#         id: deployment
+#         uses: actions/deploy-pages@v4
