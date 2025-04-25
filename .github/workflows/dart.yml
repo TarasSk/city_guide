@@ -69,12 +69,12 @@ jobs:
         if: matrix.platform == 'android'
         run: |
           flutter build apk --release
-          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/${{ github.ref_name }}-app-release.apk
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/${{ github.ref_name }}-android-apk
 
       - name: Upload Android APK
         if: matrix.platform == 'android'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.ref_name }}-android-apk
-          path: build/app/outputs/flutter-apk/${{ github.ref_name }}-app-release.apk
+          path: build/app/outputs/flutter-apk/${{ github.ref_name }}-android-apk
 

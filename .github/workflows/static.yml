@@ -37,6 +37,12 @@ jobs:
           name: ${{ github.ref_name }}-android-apk
           path: ${{ env.PUBLISH_DIR }}/builds/
           
+      # Debug available artifacts
+      - name: Debug available artifacts
+        run: |
+          echo "Available artifacts:"
+          ls ${{ env.PUBLISH_DIR }}/builds/
+          
       # Rename artifacts to original filenames
       - name: Normalize filenames
         run: |
