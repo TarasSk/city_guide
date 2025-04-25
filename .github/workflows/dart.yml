@@ -85,7 +85,7 @@ jobs:
       - name: Download Android APK
         uses: actions/download-artifact@v4
         with:
-          name: android-
+          name: android-apk
       - name: Debug available artifacts
         run: |
           echo "Available artifacts:"
