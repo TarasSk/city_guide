@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key, required this.navigationShell});
+  const MainPage({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
@@ -11,13 +11,13 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
           BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Profile'),
         ],
         currentIndex: navigationShell.currentIndex,
-        onTap: (int tappedIndex) => navigationShell.goBranch(tappedIndex),
+        onTap: navigationShell.goBranch,
       ),
     );
   }

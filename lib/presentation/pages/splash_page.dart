@@ -41,7 +41,7 @@ class _SplashPageState extends State<SplashPage>
       body: Center(
         child: FadeTransition(
           opacity: _animation,
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
@@ -49,8 +49,8 @@ class _SplashPageState extends State<SplashPage>
                 size: 100,
                 color: Colors.blue,
               ),
-              const SizedBox(height: 20),
-              const Text(
+              SizedBox(height: 20),
+              Text(
                 'City Guide',
                 style: TextStyle(
                   fontSize: 24,
