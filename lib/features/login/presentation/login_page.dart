@@ -1,8 +1,8 @@
+import 'package:city_guide_app/features/debug/debug_page.dart';
 import 'package:city_guide_app/features/login/presentation/login_screen.dart';
 import 'package:city_guide_app/src/application/blocs/theme/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:city_guide_app/features/debug/debug_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

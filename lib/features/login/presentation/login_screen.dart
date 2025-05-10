@@ -1,4 +1,6 @@
+import 'package:city_guide_app/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -7,6 +9,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
+
    return Stack(
         children: [
           Column(
@@ -33,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       FilledButton.icon(
-                        onPressed: () {},
+                        onPressed: ()=> context.read<AuthBloc>()..add(const AuthEvent.loginWithGoogleRequested()),
                         icon: const Icon(Icons.g_mobiledata),
                         label: const Text('Continue with Google'),
                         style: FilledButton.styleFrom(

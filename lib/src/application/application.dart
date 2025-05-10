@@ -1,3 +1,4 @@
+import 'package:city_guide_app/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:city_guide_app/src/application/blocs/theme/theme_bloc.dart';
 import 'package:city_guide_app/src/application/di/injection_container.dart';
 import 'package:city_guide_app/src/application/di/injection_container.dart'
@@ -28,6 +29,7 @@ class _ApplicationState extends State<Application> {
           create: (context) =>
               di.injector<ThemeBloc>()..add(const GetThemeEvent()),
         ),
+        BlocProvider(create: (context) => di.injector<AuthBloc>()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
@@ -36,7 +38,7 @@ class _ApplicationState extends State<Application> {
             ThemeLight() => ThemeMode.light,
             _ => ThemeMode.system,
           };
-          
+
           return MaterialApp.router(
             title: 'City Guide App',
             routerDelegate: _appRouter.routerDelegate,
