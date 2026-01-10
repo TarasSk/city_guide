@@ -1,6 +1,6 @@
-import 'package:city_guide_app/features/auth/data/user.dart' as user_model;
+import 'package:city_guide_app/features/auth/data/user.dart';
 import 'package:city_guide_app/features/auth/domain/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -14,20 +14,20 @@ class AuthRepositoryImpl implements AuthRepository {
   final GoogleSignIn _googleSignIn;
 
   @override
-  user_model.User getCurrentUser() {
-    final user = _firebaseAuth.currentUser;
-    if (user == null) {
-      return const user_model.User.empty();
+  User getCurrentUser() {
+    final firebaseUser = _firebaseAuth.currentUser;
+    if (firebaseUser == null) {
+      return const User.empty();
     }
 
-    return user_model.User(
-      id: user.uid,
-      name: user.displayName,
+    return User(
+      id: firebaseUser.uid,
+      name: firebaseUser.displayName,
     );
   }
 
   @override
-  Future<user_model.User> signInWithGoogle() async {
+  Future<User> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
@@ -42,17 +42,17 @@ class AuthRepositoryImpl implements AuthRepository {
 
       final userCredential =
           await _firebaseAuth.signInWithCredential(credential);
-      final user = userCredential.user;
+      final firebaseUser = userCredential.user;
 
-      if (user == null) {
+      if (firebaseUser == null) {
         throw Exception('Firebase sign-in failed');
       }
 
-      return user_model.User(
-        id: user.uid,
-        name: user.displayName,
+      return User(
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName,
       );
-    } on Exception catch (e) {
+    } catch (e) {
       rethrow;
     }
   }

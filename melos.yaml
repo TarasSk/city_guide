@@ -4,6 +4,13 @@ packages:
   - packages/theme
   - packages/data
   - packages/domain
+  - packages/core
+  - packages/auth
+  - packages/home
+  - packages/login
+  - packages/debug
+  - packages/presentation
+  - packages/dependencies
 
 scripts:
   analyze:

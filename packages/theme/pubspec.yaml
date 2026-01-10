@@ -1,6 +1,9 @@
 name: theme
 description: "A new Flutter package project."
-version: 0.0.1
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
 homepage:
 
 environment:
@@ -10,6 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dependencies: ^1.0.0
 
 dev_dependencies:
   flutter_test:

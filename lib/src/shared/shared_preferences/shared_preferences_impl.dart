@@ -5,9 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Concrete implementation of SharedPreferencesAbstract.
 class SharedPreferencesImpl implements SharedPreferencesAbstract {
-
   /// Constructor with external library dependency.
   SharedPreferencesImpl({required this.sharedPreferences});
+
   /// External library member.
   final SharedPreferences sharedPreferences;
 
@@ -15,7 +15,6 @@ class SharedPreferencesImpl implements SharedPreferencesAbstract {
   Set<String> getKeys() {
     return sharedPreferences.getKeys();
   }
-
 
   @override
   Object? get(String key) {
@@ -53,7 +52,7 @@ class SharedPreferencesImpl implements SharedPreferencesAbstract {
   }
 
   @override
-  Future<bool> setBool(String key, bool value) {
+  Future<bool> setBool(String key, {required bool value}) {
     return sharedPreferences.setBool(key, value);
   }
 

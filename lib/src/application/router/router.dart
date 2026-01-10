@@ -1,9 +1,14 @@
+import 'package:city_guide_app/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:city_guide_app/features/login/presentation/login_page.dart';
 import 'package:city_guide_app/presentation/pages/main_page.dart';
 import 'package:city_guide_app/presentation/pages/splash_page.dart';
+import 'package:city_guide_app/src/application/di/injection_container.dart'
+    as di;
 import 'package:city_guide_app/src/application/router/home_router_module.dart';
 import 'package:city_guide_app/src/application/router/routes.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -12,20 +17,17 @@ class AppRouter {
     BuildContext context,
     GoRouterState state,
   ) async {
-    final loggedIn = false;
-    final loggingIn = state.matchedLocation == Routes.login;
-    // ignore: dead_code
+    final loggedIn = context.read<AuthBloc>().state is AuthAuthenticated;
+    final onLoginPage = state.matchedLocation == Routes.login;
+    final onSplashPage = state.matchedLocation == Routes.splash;
     if (!loggedIn) {
       return Routes.login;
     }
-
-    // if the user is logged in but still on the login page, send them to
-    // the home page
-    if (loggingIn) {
+    if (onLoginPage || onSplashPage) {
       return Routes.home;
     }
 
-    // no need to redirect at all
+    // No need to redirect at all.
     return null;
   }
 
@@ -37,6 +39,9 @@ class AppRouter {
     debugLogDiagnostics: true,
     redirect: _redirect,
     routes: _appRoutes,
+    observers: [
+      FirebaseAnalyticsObserver(analytics: di.injector<FirebaseAnalytics>()),
+    ],
   );
 
   static final List<RouteBase> _appRoutes = [

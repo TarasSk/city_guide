@@ -1,11 +1,7 @@
-import 'package:city_guide_app/features/auth/presentation/blocs/auth/auth_bloc.dart';
-import 'package:city_guide_app/src/application/blocs/theme/theme_bloc.dart';
-import 'package:city_guide_app/src/application/di/injection_container.dart';
-import 'package:city_guide_app/src/application/di/injection_container.dart'
-    as di;
+import 'package:auth/auth.dart';
+import 'package:city_guide_app/di/injection_container.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class Application extends StatefulWidget {
   const Application({super.key});
@@ -27,9 +23,9 @@ class _ApplicationState extends State<Application> {
       providers: [
         BlocProvider(
           create: (context) =>
-              di.injector<ThemeBloc>()..add(const GetThemeEvent()),
+              injector<ThemeBloc>()..add(const GetThemeEvent()),
         ),
-        BlocProvider(create: (context) => di.injector<AuthBloc>()),
+        BlocProvider(create: (context) => injector<AuthBloc>()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {

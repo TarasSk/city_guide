@@ -26,7 +26,7 @@ abstract interface class SharedPreferencesAbstract {
   List<String>? getStringList(String key);
 
   /// Saves a boolean [value] to persistent storage in the background.
-  Future<bool> setBool(String key, bool value);
+  Future<bool> setBool(String key, {required bool value});
 
   /// Saves an int [value] to persistent storage in the background.
   Future<bool> setInt(String key, int value);
