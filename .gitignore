@@ -53,3 +53,7 @@ app.*.map.json
 /firebase.json
 *.cache
 hosting/.cache
+
+# FVM Version Cache
+.fvm/
+.fvmrc

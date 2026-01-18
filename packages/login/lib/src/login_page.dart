@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:debug/debug.dart';
-import 'package:dependencies/dependencies.dart';
+
 import 'package:flutter/material.dart';
 import 'package:login/login.dart';
 

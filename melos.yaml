@@ -17,3 +17,4 @@ scripts:
     run: |
       dart pub global run dart_code_metrics:metrics analyze lib
     description: Run Dart Code Metrics analysis for all packages.
+sdkPath: .fvm/flutter_sdk
