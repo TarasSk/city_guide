@@ -14,6 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
@@ -39,6 +44,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.3'
@@ -51,30 +61,47 @@ jobs:
 
   build_artifacts:
     name: Build Artifacts
-    runs-on: ubuntu-latest
+    if: success()
     needs: code_quality
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        platform: [android, ios]
+        include:
+          - os: ubuntu-latest
+            platform: android
+            artifact_name: android-apk
+            artifact_path: build/app/outputs/flutter-apk/app-release.apk
+            build_cmd: flutter build apk --release
+          - os: macos-latest
+            platform: ios
+            artifact_name: ios-ipa
+            artifact_path: build/ios/iphoneos/Runner.app
+            build_cmd: flutter build ios --release --no-codesign
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.3'
 
-      - name: Build APK for Android
-        if: matrix.platform == 'android'
-        run: flutter build apk --release
+      - name: Install dependencies
+        run: flutter pub get
+          
+      - name: Build Artifact
+        run: ${{ matrix.build_cmd }}
 
-      - name: Upload Android APK
-        if: matrix.platform == 'android'
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_path }}
   
   download_artifacts:
     name: Download Artifacts
@@ -86,6 +113,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: android-apk
+      - name: Download iOS App
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-ipa
       - name: Debug available artifacts
         run: |
           echo "Available artifacts:"
