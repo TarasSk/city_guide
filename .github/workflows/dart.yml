@@ -32,6 +32,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.38.7'
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
@@ -49,15 +50,32 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            ~/.dartServer
+          key: dependencies-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            dependencies-${{ runner.os }}-
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.38.7'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Install Melos
+        run: dart pub global activate melos
 
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze project source
-        run: flutter analyze
+        run: dart pub global run melos analyze
 
   build_artifacts:
     name: Build Artifacts
@@ -90,6 +108,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.38.7'
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
