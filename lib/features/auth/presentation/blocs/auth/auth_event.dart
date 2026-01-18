@@ -9,10 +9,12 @@ sealed class AuthEvent extends Equatable {
   }) = LoginWithEmailRequested;
 
   const factory AuthEvent.loginWithGoogleRequested() = LoginWithGoogleRequested;
-  const factory AuthEvent.loginWithFacebookRequested() = LoginWithFacebookRequested;
+  const factory AuthEvent.loginWithFacebookRequested() =
+      LoginWithFacebookRequested;
   const factory AuthEvent.loginWithAppleRequested() = LoginWithAppleRequested;
   const factory AuthEvent.loginWithPhoneRequested() = LoginWithPhoneRequested;
-  const factory AuthEvent.loginWithAnonymousRequested() = LoginWithAnonymousRequested;
+  const factory AuthEvent.loginWithAnonymousRequested() =
+      LoginWithAnonymousRequested;
 
   const factory AuthEvent.logoutRequested() = LogoutRequested;
 
@@ -21,7 +23,6 @@ sealed class AuthEvent extends Equatable {
 }
 
 final class LoginWithEmailRequested extends AuthEvent {
-
   const LoginWithEmailRequested({required this.email, required this.password});
   final String email;
   final String password;
@@ -33,12 +34,15 @@ final class LoginWithEmailRequested extends AuthEvent {
 final class LoginWithGoogleRequested extends AuthEvent {
   const LoginWithGoogleRequested();
 }
+
 final class LoginWithFacebookRequested extends AuthEvent {
   const LoginWithFacebookRequested();
 }
+
 final class LoginWithAppleRequested extends AuthEvent {
   const LoginWithAppleRequested();
 }
+
 final class LoginWithPhoneRequested extends AuthEvent {
   const LoginWithPhoneRequested();
 }
@@ -46,6 +50,7 @@ final class LoginWithPhoneRequested extends AuthEvent {
 final class LogoutRequested extends AuthEvent {
   const LogoutRequested();
 }
+
 final class LoginWithAnonymousRequested extends AuthEvent {
   const LoginWithAnonymousRequested();
 }

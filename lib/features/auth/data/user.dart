@@ -3,7 +3,7 @@ class User {
     required this.id,
     this.name,
   });
-  
+
   const User.empty()
       : id = '',
         name = null;

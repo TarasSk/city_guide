@@ -54,4 +54,3 @@ abstract interface class SharedPreferencesAbstract {
   /// (without using the plugin) while the app is running.
   Future<void> reload();
 }
-

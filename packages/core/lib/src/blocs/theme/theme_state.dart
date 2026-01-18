@@ -22,4 +22,3 @@ final class ThemeLight extends ThemeState {
 final class ThemeSystem extends ThemeState {
   const ThemeSystem();
 }
-

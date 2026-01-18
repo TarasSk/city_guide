@@ -3,7 +3,7 @@ class User {
     required this.id,
     this.name,
   });
-  
+
   const User.empty()
       : id = '',
         name = null;
@@ -24,4 +24,3 @@ class User {
   @override
   String toString() => 'User(id: $id, name: $name)';
 }
-

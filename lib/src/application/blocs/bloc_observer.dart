@@ -16,10 +16,13 @@ class AppBlocObserver extends BlocObserver {
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
     _logger.info('onCreate -- ${bloc.runtimeType}');
-    _analytics.logEvent(name: 'blocCreate', parameters: {
-      'bloc': bloc.runtimeType.toString(),
-      'state': bloc.state.toString(),
-    },);
+    _analytics.logEvent(
+      name: 'blocCreate',
+      parameters: {
+        'bloc': bloc.runtimeType.toString(),
+        'state': bloc.state.toString(),
+      },
+    );
   }
 
   @override

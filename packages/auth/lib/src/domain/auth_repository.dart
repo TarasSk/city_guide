@@ -10,4 +10,3 @@ abstract interface class AuthRepository {
   /// Throws an exception if the sign-in fails.
   Future<User> signInWithGoogle();
 }
-

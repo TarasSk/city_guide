@@ -15,12 +15,15 @@ sealed class ThemeEvent extends Equatable {
 final class SetLightThemeEvent extends ThemeEvent {
   const SetLightThemeEvent();
 }
+
 final class SetDarkThemeEvent extends ThemeEvent {
   const SetDarkThemeEvent();
 }
+
 final class SetSystemThemeEvent extends ThemeEvent {
   const SetSystemThemeEvent();
 }
+
 final class GetThemeEvent extends ThemeEvent {
   const GetThemeEvent();
 }
