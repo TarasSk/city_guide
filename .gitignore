@@ -57,3 +57,5 @@ hosting/.cache
 # FVM Version Cache
 .fvm/
 .fvmrc
+
+.codemie
