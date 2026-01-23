@@ -200,3 +200,24 @@ The project is migrating from a monolithic structure to modular packages:
 - Old code exists in `lib/features/` directory
 - New modular structure in `packages/`
 - Both structures currently coexist
+
+## Development Workflow Commands
+
+Custom command templates are available in `.claude/commands/` to guide common workflows:
+
+### Feature Development
+- **`/add-feature`** - Create new feature package with complete Clean Architecture structure
+- **`/add-bloc`** - Add BLoC following sealed class patterns with events/states/tests
+- **`/plan`** - Plan implementation considering architecture and dependencies
+
+### Code Quality
+- **`/tdd`** - Test-driven development workflow for BLoCs and repositories
+- **`/code-review`** - Comprehensive quality review checklist (linting, architecture, testing)
+- **`/refactor-clean`** - Safely identify and remove dead code
+- **`/generate`** - Run code generation for routes and update generated files
+
+### Build & Testing
+- **`/build-fix`** - Systematic build error diagnosis (dependencies, generation, native builds)
+- **`/e2e`** - Create integration tests for complete user flows
+
+See `.claude/commands/README.md` for detailed usage of each command.
