@@ -208,16 +208,21 @@ Custom command templates are available in `.claude/commands/` to guide common wo
 ### Feature Development
 - **`/add-feature`** - Create new feature package with complete Clean Architecture structure
 - **`/add-bloc`** - Add BLoC following sealed class patterns with events/states/tests
+- **`/add-repository`** - Add repository following abstract interface + implementation pattern
 - **`/plan`** - Plan implementation considering architecture and dependencies
 
 ### Code Quality
 - **`/tdd`** - Test-driven development workflow for BLoCs and repositories
 - **`/code-review`** - Comprehensive quality review checklist (linting, architecture, testing)
 - **`/refactor-clean`** - Safely identify and remove dead code
+- **`/format`** - Quick format and lint check before commits
 - **`/generate`** - Run code generation for routes and update generated files
 
 ### Build & Testing
 - **`/build-fix`** - Systematic build error diagnosis (dependencies, generation, native builds)
 - **`/e2e`** - Create integration tests for complete user flows
+
+### Dependency Management
+- **`/update-deps`** - Safe dependency updates for Melos monorepo (bootstrap, Flutter version, package updates)
 
 See `.claude/commands/README.md` for detailed usage of each command.

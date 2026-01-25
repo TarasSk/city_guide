@@ -10,11 +10,16 @@ This directory contains custom command templates for working with this Flutter C
 - **`/code-review`** - Comprehensive code quality review checklist
 - **`/build-fix`** - Systematic build error diagnosis and fixes
 - **`/generate`** - Run code generation for routes and other generated files
+- **`/format`** - Quick format and lint check before commits
 
 ### Feature Development
 - **`/add-feature`** - Create new feature package with Clean Architecture structure
 - **`/add-bloc`** - Create new BLoC following sealed class patterns
+- **`/add-repository`** - Add repository following abstract interface pattern
 - **`/refactor-clean`** - Identify and remove dead code safely
+
+### Dependency Management
+- **`/update-deps`** - Safe dependency updates for Melos monorepo
 
 ### Testing
 - **`/e2e`** - Generate end-to-end integration tests for user flows
